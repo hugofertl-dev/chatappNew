@@ -1,4 +1,5 @@
 import 'package:chat_app/bloc/autservice/authservice_bloc.dart';
+import 'package:chat_app/bloc/chatservice/chatservice_bloc.dart';
 import 'package:chat_app/bloc/socketservice/socketservice_bloc.dart';
 import 'package:chat_app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthserviceBloc>(create: (_) => AuthserviceBloc()),
-        BlocProvider<SocketserviceBloc>(create: (_) => SocketserviceBloc())
+        BlocProvider<SocketserviceBloc>(create: (_) => SocketserviceBloc()),
+        BlocProvider<ChatserviceBloc>(create: (_) => ChatserviceBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

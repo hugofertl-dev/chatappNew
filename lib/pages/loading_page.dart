@@ -1,4 +1,5 @@
 import 'package:chat_app/bloc/autservice/authservice_bloc.dart';
+import 'package:chat_app/bloc/chatservice/chatservice_bloc.dart';
 import 'package:chat_app/bloc/socketservice/socketservice_bloc.dart';
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/usuarios_page.dart';
@@ -11,6 +12,7 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AuthserviceBloc>().add(OnLeggedIn());
+    context.read<ChatserviceBloc>().add(OnInicializaEscuchaMensaje());
     return Scaffold(
         body: BlocConsumer<AuthserviceBloc, AuthserviceState>(
       listener: (_, state) {

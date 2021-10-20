@@ -1,6 +1,8 @@
 import 'package:chat_app/bloc/autservice/authservice_bloc.dart';
+import 'package:chat_app/bloc/chatservice/chatservice_bloc.dart';
 import 'package:chat_app/bloc/socketservice/socketservice_bloc.dart';
 import 'package:chat_app/model/usuario.dart';
+import 'package:chat_app/services/obtiene_usuarios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,21 +17,15 @@ class UsuariosPage extends StatefulWidget {
 class _UsuariosPageState extends State<UsuariosPage> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  final ObtieneUsuarios obtieneUsuarios = ObtieneUsuarios();
 
-  List<Usuario> lstUsuarios = [
-    Usuario(
-        email: 'hugo@test.com', nombre: 'Hugo Fertl', online: true, uid: '1'),
-    Usuario(
-        email: 'natalia@test.com',
-        nombre: 'Natalia Ruez',
-        online: true,
-        uid: '2'),
-    Usuario(
-        email: 'juan@test.com',
-        nombre: 'Juan de los Palotes',
-        online: false,
-        uid: '3'),
-  ];
+  List<Usuario> lstUsuarios = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _onRefresh();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +73,7 @@ class _UsuariosPageState extends State<UsuariosPage> {
   }
 
   void _onRefresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    lstUsuarios = await ObtieneUsuarios().getUsuarios();
     _refreshController.refreshCompleted();
     if (mounted) {
       setState(() {});
@@ -103,6 +99,10 @@ class _UsuariosPageState extends State<UsuariosPage> {
             borderRadius: BorderRadius.circular(50),
             color: (usuario.online) ? Colors.green[300] : Colors.red[600]),
       ),
+      onTap: () {
+        context.read<ChatserviceBloc>().add(OnEstableUsuarioPara(usuario));
+        Navigator.pushNamed(context, 'chat');
+      },
     );
   }
 }

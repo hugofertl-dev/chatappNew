@@ -16,3 +16,9 @@ class OnEmitStatusSocketService extends SocketserviceEvent {
 
   OnEmitStatusSocketService(this.serverStatus);
 }
+
+class OnEmitMensajeSocketService extends SocketserviceEvent {
+  final Map<String, dynamic> mensaje;
+
+  OnEmitMensajeSocketService(this.mensaje);
+}

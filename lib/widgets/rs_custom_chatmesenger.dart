@@ -4,12 +4,14 @@ class RsCustomChatMesenger extends StatelessWidget {
   final String texto;
   final String uid;
   final AnimationController animationController;
+  final String usuarioLogeadoId;
 
   const RsCustomChatMesenger(
       {Key? key,
       required this.texto,
       required this.uid,
-      required this.animationController})
+      required this.animationController,
+      required this.usuarioLogeadoId})
       : super(key: key);
 
   @override
@@ -20,7 +22,8 @@ class RsCustomChatMesenger extends StatelessWidget {
             sizeFactor: CurvedAnimation(
                 parent: animationController, curve: Curves.easeOut),
             child: Container(
-                child: uid == '123' ? _myMessage() : _otherMessage())));
+                child:
+                    uid == usuarioLogeadoId ? _myMessage() : _otherMessage())));
   }
 
   Widget _myMessage() {
